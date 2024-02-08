@@ -48,7 +48,7 @@ class ContrastiveLoss(nn.Module):
         negatives_mask = (~torch.eye(SIZE * 2, SIZE * 2, dtype=bool)).cuda().float()
         negative_sample_mask = self.sample_mask(target_clsuter)
         denominator = negatives_mask * torch.exp(similarity_matrix / self.temperature)
-        denominator = negative_sample_mask * denominator  # 按位相乘
+        denominator = negative_sample_mask * denominator  
         loss_partial = -torch.log(nominator / (torch.sum(denominator, dim=1) + 1e-7))
         loss = torch.sum(loss_partial) / (2 * SIZE)
         return loss
@@ -63,7 +63,7 @@ class ContrastiveLoss(nn.Module):
         mask = np.ones((len(targets), len(targets)))
         for i, target in enumerate(targets):
             for j in cl_dict[target]:
-                if abs(j - i) != len(targets) / 2:  # 防止mask将正样本的位置置为零
+                if abs(j - i) != len(targets) / 2:  
                     mask[i][j] = 0
         return torch.Tensor(mask).cuda().float()
 
