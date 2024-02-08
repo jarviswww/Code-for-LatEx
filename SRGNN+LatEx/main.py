@@ -34,7 +34,7 @@ parser.add_argument('--valid_portion', type=float, default=0.1,help='split the p
 parser.add_argument('--intent_learning', default='average', help='cluster/average')
 parser.add_argument('--temperature', type=float, default=0.1, help='the temperature coefficient of LatEx')
 parser.add_argument('--slack', default=False, help='LatEx or Slack-LatEx')
-parser.add_argument('--scale', type=float, default=0.1, help='the sacle of LatEx loss')
+parser.add_argument('--scale', type=float, default=0.2, help='the sacle of LatEx loss')
 parser.add_argument('--threshold', type=int, default=8, help='the threshold of Slack-LatEx')
 
 opt = parser.parse_args(args=[])

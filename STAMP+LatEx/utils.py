@@ -37,7 +37,7 @@ def get_mrr(pre, truth):
     return mrr
 
 
-def intraConv(cat_to_item, pre, pre_cate, truth_cate):
+def IntMetric(cat_to_item, pre, pre_cate, truth_cate):
 
     D = torch.zeros_like(pre)
     score = 0
@@ -58,7 +58,7 @@ def intraConv(cat_to_item, pre, pre_cate, truth_cate):
 
 
 
-def Conv(pre, n_node):
+def Coverage(pre, n_node):
 
     score = 0
     item = []

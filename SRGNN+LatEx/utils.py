@@ -50,7 +50,7 @@ def get_mrr(pre, truth):
     mrr = torch.sum(r_ranks).data / targets.size(0)
     return mrr
 
-def intraConv(cat_to_item, pre, pre_cate, truth_cate):
+def IntMetric(cat_to_item, pre, pre_cate, truth_cate):
     """
     :param pre: (B, K)
     :param pre_cate: (B, K)
@@ -75,7 +75,7 @@ def intraConv(cat_to_item, pre, pre_cate, truth_cate):
     return score / pre.shape[0]
 
 
-def Conv(pre, n_node):
+def Coverage(pre, n_node):
     """
     :param pre: (B, K)
     :param pre_cate: (B, K)

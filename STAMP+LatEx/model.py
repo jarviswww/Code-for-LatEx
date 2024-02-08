@@ -281,9 +281,9 @@ def train_test(model, opt, train_data, test_data, t_score, n_node):
     test_cat = model.item_2cluster[test_y]
     cat_to_item = model.cat_to_item
 
-    intraConverage_10 = intraConv(cat_to_item, y_pre_all_10, pre_cat_10, test_cat.cuda().unsqueeze(1))
-    intraConverage_20 = intraConv(cat_to_item, y_pre_all, pre_cat, test_cat.cuda().unsqueeze(1))
-    Converage = Conv(y_pre_all, n_node)
+    Int_10 = IntMetric(cat_to_item, y_pre_all_10, pre_cat_10, test_cat.cuda().unsqueeze(1))
+    Int_20 = IntMetric(cat_to_item, y_pre_all, pre_cat, test_cat.cuda().unsqueeze(1))
+    Coverage = Coverage(y_pre_all, n_node)
 
     recall = get_recall(y_pre_all, test_y.long().unsqueeze(1) - 1)
     recall_10 = get_recall(y_pre_all_10, test_y.unsqueeze(1) - 1)
@@ -291,7 +291,7 @@ def train_test(model, opt, train_data, test_data, t_score, n_node):
     mrr_10 = get_mrr(y_pre_all_10, test_y.unsqueeze(1) - 1)
 
 
-    print("Converage@20: " + "%.4f" % Converage)
-    print("IntraConv@20: " + "%.4f" % intraConverage_20 + "  IntraConv@10: " + "%.4f" % intraConverage_10)
+    print("Coverage@20: " + "%.4f" % Coverage)
+    print("Int@20: " + "%.4f" % Int_20 + "  Int@10: " + "%.4f" % Int_10)
     print("Recall@20: " + "%.4f" % recall + "  Recall@10: " + "%.4f" % recall_10)
     print("MRR@20:" + "%.4f" % mrr.tolist() + "  MRR@10:" + "%.4f" % mrr_10.tolist())
