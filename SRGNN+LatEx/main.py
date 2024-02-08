@@ -55,7 +55,6 @@ def main():
         item_to_cat = renumber(item_to_cat)
         cat_to_item = {}
         for key, value in item_to_cat.items():
-            # 如果值在新字典的键中已经存在，则将当前键添加到对应的值列表中
             cat_to_item.setdefault(value, []).append(key)
         item_to_cat = item_to_centroids(item_to_cat).cuda()
     else:
