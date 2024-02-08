@@ -48,7 +48,7 @@ class ContrastiveLoss(nn.Module):
         negatives_mask = (~torch.eye(SIZE * 2, SIZE * 2, dtype=bool)).cuda().float()
         negative_sample_mask = self.sample_mask(target_clsuter)
         denominator = negatives_mask * torch.exp(similarity_matrix / self.temperature)
-        denominator = negative_sample_mask * denominator  # 按位相乘
+        denominator = negative_sample_mask * denominator  
         loss_partial = -torch.log(nominator / (torch.sum(denominator, dim=1) + 1e-7))
         loss = torch.sum(loss_partial) / (2 * SIZE)
         return loss
@@ -63,7 +63,7 @@ class ContrastiveLoss(nn.Module):
         mask = np.ones((len(targets), len(targets)))
         for i, target in enumerate(targets):
             for j in cl_dict[target]:
-                if abs(j - i) != len(targets) / 2:  # 防止mask将正样本的位置置为零
+                if abs(j - i) != len(targets) / 2:  
                     mask[i][j] = 0
         return torch.Tensor(mask).cuda().float()
 
@@ -283,7 +283,7 @@ def train_test(model, opt, train_data, test_data, t_score, n_node):
 
     Int_10 = IntMetric(cat_to_item, y_pre_all_10, pre_cat_10, test_cat.cuda().unsqueeze(1))
     Int_20 = IntMetric(cat_to_item, y_pre_all, pre_cat, test_cat.cuda().unsqueeze(1))
-    Coverage = Coverage(y_pre_all, n_node)
+    Cov = Coverage(y_pre_all, n_node)
 
     recall = get_recall(y_pre_all, test_y.long().unsqueeze(1) - 1)
     recall_10 = get_recall(y_pre_all_10, test_y.unsqueeze(1) - 1)
@@ -291,7 +291,7 @@ def train_test(model, opt, train_data, test_data, t_score, n_node):
     mrr_10 = get_mrr(y_pre_all_10, test_y.unsqueeze(1) - 1)
 
 
-    print("Coverage@20: " + "%.4f" % Coverage)
+    print("Coverage@20: " + "%.4f" % Cov)
     print("Int@20: " + "%.4f" % Int_20 + "  Int@10: " + "%.4f" % Int_10)
     print("Recall@20: " + "%.4f" % recall + "  Recall@10: " + "%.4f" % recall_10)
     print("MRR@20:" + "%.4f" % mrr.tolist() + "  MRR@10:" + "%.4f" % mrr_10.tolist())

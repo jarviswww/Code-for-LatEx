@@ -296,7 +296,7 @@ def train_test(model, opt, train_data, test_data, item_to_cat, cat_to_item, n_no
 
     Int_10 = IntMetric(cat_to_item, y_pre_all_10, pre_cat_10, test_cat.cuda().unsqueeze(1))
     Int_20 = IntMetric(cat_to_item, y_pre_all, pre_cat, test_cat.cuda().unsqueeze(1))
-    Coverage = Coverage(y_pre_all, n_node)
+    Cov = Coverage(y_pre_all, n_node)
 
     recall = get_recall(y_pre_all, test_y.long().unsqueeze(1) - 1)
     recall_10 = get_recall(y_pre_all_10, test_y.unsqueeze(1) - 1)
@@ -305,7 +305,7 @@ def train_test(model, opt, train_data, test_data, item_to_cat, cat_to_item, n_no
     # state_dict = {"model": model.state_dict(), "embedding": model.embedding.state_dict()}
     # torch.save(state_dict,'saved/' + 'dg_srgnn_ccl.pth')
 
-    print("Coverage@20: " + "%.4f" % Coverage)
+    print("Coverage@20: " + "%.4f" % Cov)
     print("Int@20: " + "%.4f" % Int_20 + "  Int@10: " + "%.4f" % Int_10)
     print("Recall@20: " + "%.4f" % recall + "  Recall@10: " + "%.4f" % recall_10)
     print("MRR@20:" + "%.4f" % mrr.tolist() + "  MRR@10:" + "%.4f" % mrr_10.tolist())
